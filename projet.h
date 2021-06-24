@@ -2,17 +2,24 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct Person{
+#define NB_PERSONNES 40
+#define LONGUEUR_MAX 20
+#define CARACTERE_LIGNE 100
+
+typedef struct Person Person; 
+
+struct Person{
     int id;
     int father_id;
     int mother_id;
-    char lastname[20];
-    char firstname[20];
-    int birthdate;
-    int birthzipcode;
+    char lastname[LONGUEUR_MAX];
+    char firstname[LONGUEUR_MAX];
+    char birthdate[LONGUEUR_MAX];
+    char city[LONGUEUR_MAX];
     struct Person * p_father;
     struct Person * p_mother;
-}person;
+};
 
-initPerson(int id, int father_id, int mother_id, char *lastname, char *firstname, int birthdate, int birthzipcode);
+
+Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *firstname, char * birthdate, char * city);
 
