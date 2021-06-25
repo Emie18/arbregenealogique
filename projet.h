@@ -23,5 +23,11 @@ struct Person{
 
 Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *firstname, char * birthdate, char * city);
 
-void libere_structure(Person *person);
+void parents(Person structure[LONGUEUR_MAX]);
+
+void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char *nmere, char * pmere, char * npere, char * ppere);
+
+void libere_structure(Person structure[NB_PERSONNES]);
+
+
 
