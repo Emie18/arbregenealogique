@@ -23,3 +23,5 @@ struct Person{
 
 Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *firstname, char * birthdate, char * city);
 
+void libere_structure(Person *person);
+

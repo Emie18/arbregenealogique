@@ -14,3 +14,16 @@ Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *
         
         return actuel;
 }
+
+void libere_structure(Person *person){
+
+        // Person *temp = NULL;
+
+        // for(int i = 0; i < NB_PERSONNES; i++){
+
+                 
+        //         free(&tab[i]);
+        // }
+
+        // free(person);
+}
