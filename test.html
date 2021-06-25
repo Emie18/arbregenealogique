@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arbre Généalogique</title>
+    <style>
+        body{
+            font-family: Comic Sans MS, Comic Sans, cursive;
+            background-color: rgba(205, 235, 215, 0.438);
+        }
+        h1{
+            margin: 2rem;
+        }
+        .racine {
+            background-color:rgba(122, 122, 184, 0.692);
+            padding: 1rem;
+            box-sizing: border-box;
+            width: 30%;
+            border-radius: 600px;
+        }
+        .famille li{
+            
+            list-style: none;
+            display:inline-block;
+            margin: 3rem;
+            width: 10%;
+            height: 30px;
+            border-radius: 30px;
+           
+        }
+     a {
+        background-color: rgba(192, 173, 151, 0.664);
+         text-decoration: none;
+         color: rgb(34, 29, 29);
+         display :block;  
+         height: 30px;
+         border-radius: 30px;
+         box-shadow: 15px 15px 15px rgba(100,100,100,0.5);
+
+     }
+    </style>
+</head>
+<body>
+    <center>
+<h1>Arbre Généalogique</h1>
+<div class="racine">
+<h2>Tyler Newbury</h2>
+<h3>Date de naissances :
+<span>15/04/1796</span>
+</h3>
+<h3>lieu de naissance:
+<span>Lincolnshire</span>
+</h3>
+</div>
+<span class="vertical-linedroite"></span>
+<span class="vertical-linegauche"></span>
+<div class="famille">  
+<ul>
+<li style="margin-right: 20%;">
+<a href="name.html">Père</a>
+</li>
+<li>
+<a href="name.html">Mère</a>
+</li>  
+</ul>
+<ul>
+<li>
+<a href="name.html">Grand Père</a>
+</li>
+<li style="margin-right: 5%;">
+<a href="name.html">Grand Mère</a>
+</li>  
+<li>
+<a href="name.html">Grand Père</a>
+</li>
+<li>
+<a href="name.html">Grand Mère</a>
+</li>  
+</ul>
+</div>
+   </center>
+</body>
+</html>
