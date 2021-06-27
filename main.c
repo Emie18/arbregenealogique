@@ -11,7 +11,7 @@ int main(){
     char nom[LONGUEUR_MAX] = "\0";
     char prenom1[LONGUEUR_MAX] = "\0";
     char nom1[LONGUEUR_MAX] = "\0";
-    char * nomfichier;
+    char * nomfichier = malloc(sizeof(char*)*20);
     int identifiant = 0;
     char identifiantc[LONGUEUR_MAX];
     int identifiant1 = 0;
@@ -25,24 +25,14 @@ int main(){
     parents(structure);
     creationhtml(structure);
 
-    //char *nmere = NULL; 
-    //char *pmere = NULL;
-    //char *npere = NULL; 
-    //char *ppere = NULL;
 
-    //noms_parents(structure, 1, &nmere, &pmere, &npere, &ppere);
-
-    //printf("nom mère : %s\t prénom mère : %s\n", nmere, pmere);
-    //printf("nom père : %s\t prénom père : %s\n", npere, ppere);
-
-
-
+    int nombre_essai =0;
     while (1) {
 
       //affichage du menu
         printf("\n\n===========================================================================\n\n");
 
-        printf("Bonjour, que souhaitez vous faire ?\n\n");
+        printf(BLEU"Bonjour, que souhaitez vous faire ?\n\n");
 
         printf("1. Rechercher une personne par son nom.\n\n");
 
@@ -54,7 +44,7 @@ int main(){
 
         printf("5. Rechercher les frères et soeurs d'une personne.\n\n");
 
-        printf("\t\t->Si vous voulez stopper le logiciel, tapez 6<-\n");
+        printf("\t\t->Si vous voulez stopper le logiciel, tapez 6<-\n"NORMAL);
 
         printf("\n\n===========================================================================\n");
 
@@ -68,9 +58,14 @@ int main(){
 
             if(action<1 || action>6){
 
-                printf("Vous n'avez pas renseigné une action valide, veuillez réessayer :\n");
+                printf(ROUGE"Vous n'avez pas renseigné une action valide, veuillez réessayer :\n"NORMAL);
                 fgets(actionc, LONGUEUR_MAX, stdin);
                 action = atoi(actionc);
+                nombre_essai ++;
+                if (nombre_essai == NB_MAX_ESSAI){
+                    printf(ROUGE"nombre d'essai dépassé\n"NORMAL);
+                    return 0;
+                }
 
             }else{
 
@@ -83,18 +78,18 @@ int main(){
         switch(action){
 
             //Partie utilisant un nom et actuellement inutilisable car il y a plusieurs personnes avec le même nom
-            /*case 1:
+            // case 1:
 
-                Plusieurs personnes ont le même nom donc c'est façon de rechercher n'est pas viable.
+            //     //Plusieurs personnes ont le même nom donc c'est façon de rechercher n'est pas viable.
 
-                printf("Vous voulez rechercher l'arbre généalogique d'une personne en connaissant son nom.\nQuel est le nom de cette personne :\n");
-                fgets(nom, LONGUEUR_MAX, stdin);
-                printf("1\n");
-                nom_fichier_html(structure, identifiant, prenom, nom);
-                printf("0\n");
-                printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
-                */
-                break;
+            //     printf("Vous voulez rechercher l'arbre généalogique d'une personne en connaissant son nom.\nQuel est le nom de cette personne :\n");
+            //     fgets(nom, LONGUEUR_MAX, stdin);
+            //     //nom_fichier_html(structure, identifiant, prenom, nom);
+                
+            //     list_nom_famille(structure,nom);
+            //     printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+                
+            //     break;
 
             //Si la personne veut un arbre généalogique d'une personne en connaissant son prénom
             case 2:
@@ -103,8 +98,9 @@ int main(){
                 fgets(prenom, LONGUEUR_MAX, stdin);
                 longueur = strlen(prenom);
                 prenom[(longueur - 1)] = '\0';
-                nomfichier = nom_fichier_html(structure, identifiant, prenom, nom);
-                printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+               // char * nomfichier = nom_fichier_html(structure, identifiant, prenom, nom);
+               // nom_fichier_html(structure, identifiant, prenom, nom,&nomfichier);
+               recherche_par_prenom(structure,prenom,&nomfichier);
                 ouverture_de_fichier_html(nomfichier);
                 break;
 
@@ -113,8 +109,9 @@ int main(){
 
                 printf("Vous voulez rechercher l'arbre généalogique d'une personne en connaissant son identifiant.\nQuel est l'identifiant de cette personne :\n");
                 fgets(identifiantc, LONGUEUR_MAX, stdin);
+                //décalage donc +1
                 identifiant = atoi(identifiantc);
-
+               
                 //Vérification que l'id est un id possible
                 while(1){
 
@@ -130,19 +127,19 @@ int main(){
                     }
 
                 }
-                nomfichier = nom_fichier_html(structure, identifiant, prenom, nom);             
-                printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+                nom_fichier_html(structure, identifiant, &nomfichier);             
+                printf(BLEUCLAIR"Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n"NORMAL);
                 ouverture_de_fichier_html(nomfichier);
-
+                
                 break;
             //Si la personne veut un arbre généalogique d'une personne aléatoire
             case 4:
 
                 printf("Vous voulez rechercher l'arbre généalogique d'une personne aléatoire.\n");
                 identifiant = rand()%NB_PERSONNES;
-                nomfichier = nom_fichier_html(structure, identifiant, prenom, nom);
+                nom_fichier_html(structure, identifiant, &nomfichier);    
                 printf("%s\n", nomfichier);
-                printf("Je vais vous ouvrir ça tout de suite...\n");
+                printf(BLEUCLAIR"Je vais vous ouvrir ça tout de suite...\n"NORMAL);
                 ouverture_de_fichier_html(nomfichier);
 
                 break;
@@ -163,7 +160,7 @@ int main(){
 
                     if(action1<1 || action1>3){
 
-                        printf("Vous n'avez pas renseigné une action valide, veuillez réessayer :\n");
+                        printf(ROUGE"Vous n'avez pas renseigné une action valide, veuillez réessayer :\n"NORMAL);
                         fgets(action1c, LONGUEUR_MAX, stdin);
                         action1 = atoi(action1c);
             
@@ -216,6 +213,7 @@ int main(){
 
                                 printf("Vous n'avez pas renseigné une action valide, veuillez réessayer :\n");
                                 fgets(identifiant1c, LONGUEUR_MAX, stdin);
+                                
                                 identifiant1 = atoi(identifiant1c);
 
                             }else{
@@ -245,16 +243,6 @@ int main(){
         }
     }
 
-    //  printf("%d\n", structure[2].id);
-    //  printf("%d\n", structure[2].father_id);
-    //  printf("%d\n", structure[2].mother_id);
-    //  printf("%s\n", structure[2].lastname);
-    //  printf("%s\n", structure[2].firstname);
-    //  printf("%s\n", structure[2].birthdate);
-    //  printf("%s\n", structure[2].city);
-    //  printf("%p\n", structure[2].p_father);
-    //  printf("%p\n", structure[2].p_mother);
-    
     //libere_structure(structure);
 
     

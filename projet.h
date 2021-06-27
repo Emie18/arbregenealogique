@@ -3,10 +3,18 @@
 #include <string.h>
 #include <time.h>
 
-#define NB_PERSONNES 40
+#define NB_PERSONNES 41
 #define LONGUEUR_MAX 30
 #define CARACTERE_LIGNE 100
-#define TAILLE_MAX 1000
+#define TAILLE_MAX 100
+#define NB_MAX_ESSAI 5
+
+//la déclaration define permet de mettre des couleurs dans la console
+#define BLEUCLAIR "\033[01;34m"
+#define ROUGE "\033[00;31m"
+#define BLEU "\033[00;34m"
+#define SOULIGNE "\033[04m"
+#define NORMAL "\033[00m"
 
 typedef struct Person Person; 
 
@@ -31,7 +39,9 @@ void parents(Person structure[NB_PERSONNES]);
 //void noms_parents(Person struture[NB_PERSONNES], int enfant, char **nmere, char **pmere, char **npere, char **ppere);
 void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere, int *id_mere, int *id_pere);
 
-char * nom_fichier_html(Person structure[NB_PERSONNES], int id, char * prenom, char* nom);
+void nom_fichier_html(Person structure[NB_PERSONNES], int id, char ** nomfichier);
+void recherche_par_prenom(Person structure[NB_PERSONNES], char * prenom,char ** nomfichier);
+//int list_nom_famille(Person structure[NB_PERSONNES],char * nom);
 
 void ouverture_de_fichier_html(char * nomfichier);
 

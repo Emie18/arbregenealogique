@@ -82,8 +82,8 @@ Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *
         
         //Affectation des données à la structure crée
         actuel->id=id;
-        actuel->father_id=father_id;
-        actuel->mother_id=mother_id;
+        actuel->father_id=father_id ;
+        actuel->mother_id=mother_id ;
         strncpy(actuel->lastname, lastname, strlen(lastname));
         strncpy(actuel->firstname, firstname, strlen(firstname));
         strncpy(actuel->birthdate, birthdate, strlen(birthdate));
@@ -153,9 +153,9 @@ void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char 
 
         Person *a = NULL;
         a = struture[enfant].p_mother;
-
+        
         //S'il n'y a pas de mère, le nom sera "inconnue" et les autres informations seront nulles
-        if (a == 0){
+        if (a == NULL){
 
                 *pmere = "inconnue";
                 *nmere = "";
@@ -171,7 +171,7 @@ void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char 
         }
  
         a = struture[enfant].p_father;
-
+        
         //S'il n'y a pas de père, le nom sera "inconnue" et les autres informations seront nulles
         if (a == 0){
 
@@ -184,90 +184,101 @@ void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char 
 
                 *ppere = a->firstname;
                 *npere = a->lastname;
-                *id_pere = a->id;
+                *id_pere = a->id ;
         }
+
+
   
 }
+void recherche_par_prenom(Person structure[NB_PERSONNES], char * prenom,char ** nomfichier){
+       
+       int erreur = 0;
+       char * nom;
+        for(int i = 0;i<NB_PERSONNES;i++){
+                if(strcmp(prenom,structure[i].firstname) == 0){
+                        
+                        erreur = 1;
+                        nom = structure[i].lastname;
+                        sprintf(*nomfichier,"fichiers_HTML/%s%s.html",nom,prenom);
+                        printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+                }
+        }
+        if (erreur==0){
+                printf(ROUGE"Prenom inconnu !( vérifier les Majuscules )\n"NORMAL);
+                *nomfichier = "";
+        }
+}
 
+// int list_nom_famille(Person structure[NB_PERSONNES],char * nom){
+//         //char f[TAILLE_MAX];
+//         for(int i = 0; i<NB_PERSONNES;i ++){
+//                 char *f ;
+//                 char *g = structure[i].lastname;
+//                 sprintf(f,"%s%s",nom,nom);
+//                 sprintf(g"%s%s"g)
+//                  if(strcmp(g,nom) == 0){
+//                         //printf(BLEUCLAIR"%d:%s,%s\n",structure[i].id,structure[i].firstname,structure[i].lastname, NORMAL);
+                        
+//                 }else{
+//                         printf("%s\n,%s",f,g);
+//                 }
+//         }
+//         // printf("Entrer l'id voulu de la personne :");
+//         // char * idtexte;
+//         // fgets(idtexte, LONGUEUR_MAX, stdin);
+//         // int id = atoi(idtexte);
+//         // char * nomfichier;
+//         // sprintf(*nomfichier,"fichiers_HTML/%s%s.html",structure[id-1].lastname,structure[id-1].firstname);
+//         // ouverture_de_fichier_html(nomfichier);
+//         // return 0;
+
+// }
 //Fonction qui à pour but de recréer le nomm du fichier contenant l'arbre généalogique de la personne renseigné
-char * nom_fichier_html(Person structure[NB_PERSONNES], int id, char * prenom, char* nom){
-
-        char *prenom1;
+void nom_fichier_html(Person structure[NB_PERSONNES], int id, char ** nomfichier){
+         char *prenom1;
         char *nom1;
-        char *nomfichier = malloc(sizeof(char)*20);
+        
         char vide[LONGUEUR_MAX] = "\0";
         int i;
-
+        //décalage du tableau
+        id ++;
+      
         //Si l'utilisateur à fournis un ID (qui n'est donc pas nul)
         if(id != 0){
 
                 //Le nom du fichier sera "fichiers_HTML+le nom et le prénom contenus dans la structure au rang de l'id donné - 1 (les tableau commencent au rang 0 alors que le fichier commence au rang 0) 
-                sprintf(nomfichier,"fichiers_HTML/%s%s.html",structure[id-1].lastname,structure[id-1].firstname);
-                return nomfichier;
-
-        //Sinon si l'utilisateur à fournis un prénom
-        }else{if(strcmp(prenom,vide) != 0){
-
-
-                for(i = 0; i<NB_PERSONNES; i++){
-
-                        //Recherche de la structure qui contient le prénom fournis pour récupéré le nom de la personne
-                        if(strcmp(structure[i].firstname, prenom) == 0 ){
-
-                                //Le nom du fichier sera "fichiers_HTML+le nom récupéré prénom fourni
-                                sprintf(nomfichier,"fichiers_HTML/%s%s.html",structure[i].lastname,prenom);
-                                return nomfichier;
-
-                        }
-                }
-
-                printf("Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n");
-                //je ne sais pas si on retourne au main ici, ou si on lui redemande s'il veut ressayer un autre nom
+                sprintf(*nomfichier,"fichiers_HTML/%s%s.html",structure[id-1].lastname,structure[id-1].firstname);
                 
-        //Partie non utilisé pour l'instant car l'utilisateur ne peut pas donner de nom comme plusieurs personnes portent le même nom
-        }else{if(strcmp(nom,vide) != 0){
-
-                for(i = 0; i<NB_PERSONNES; i++){
-
-                        printf("%s\n", structure[i].lastname);
-
-                        if(strcmp(structure[i].lastname, nom) == 0 ){
-
-                             prenom1 = structure[i].firstname;
-                             sprintf(nomfichier,"%s%s.html",nom,prenom1);
-                             return nomfichier;
-                        }
-                }
-
-                printf("Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n");
-                //je ne sais pas si on retourne au main ici, ou si on lui redemande s'il veut ressayer un autre prenom
-
-
-
-                }
-        }
-        }
-
         
+                }else{
+                        printf(ROUGE"Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n"NORMAL);   
+                        *nomfichier = "";
+                }
+
+
 }
+
 
 //Fonction qui ouvre le fichier fournis à l'appel
 void ouverture_de_fichier_html(char * nomfichier){
-    
-     char fichier_ouvrir[LONGUEUR_MAX];
-     sprintf(fichier_ouvrir,"xdg-open %s",nomfichier);
-     system(fichier_ouvrir);
+    if(strcmp(nomfichier,"")!= 0){
+        char* fichier_ouvrir = malloc(sizeof(char*)*TAILLE_MAX);
+        sprintf(fichier_ouvrir,"xdg-open %s",nomfichier);
+        system(fichier_ouvrir);  
+    }else{
+            printf(ROUGE"Nous n'avons pas put ouvrir de fichier"NORMAL);
+    }
+     
 
 }
 
 //fonction pour créer les balises lien
 char *baliselien(char *nom, char *prenom, char *balise)
 {
-
    sprintf(balise, "<a href=\"%s%s.html\">%s %s</a>", nom, prenom, prenom, nom);
    return balise;
 }
-
+//fonction pour la création des fichiers HTML dans le dessier fichiers_HTML
 void creationhtml(Person structure[NB_PERSONNES])
 {
    for (int j = 0; j < NB_PERSONNES; j++)
@@ -288,6 +299,7 @@ void creationhtml(Person structure[NB_PERSONNES])
       char *nom_mere;
       int id_mere;
       int id_pere;
+      //variable pour les s'arrêter au grand parent
       int rien;
       //recherche des parents de l'enfant
       noms_parents(structure, j, &nom_mere, &prenom_mere, &nom_pere, &prenom_pere, &id_pere, &id_mere);
@@ -298,17 +310,17 @@ void creationhtml(Person structure[NB_PERSONNES])
       char *prenom_grandmere1;
       char *nom_grandmere1;
 
-      //recherche des parents du pere
-      noms_parents(structure, id_pere, &nom_grandmere1, &prenom_grandmere1, &nom_grandpere1, &prenom_grandpere1, &rien, &rien);
-
+      //recherche des parents du père
+      noms_parents(structure, id_mere, &nom_grandmere1, &prenom_grandmere1, &nom_grandpere1, &prenom_grandpere1, &rien, &rien);
+      
       
       //côté mères
       char *prenom_grandpere2;
       char *nom_grandpere2;
       char *prenom_grandmere2;
       char *nom_grandmere2;
-      //recherche des parents de la mere
-      noms_parents(structure, id_mere, &nom_grandmere2, &prenom_grandmere2, &nom_grandpere2, &prenom_grandpere2, &rien, &rien);
+      //recherche des parents de la mère
+      noms_parents(structure, id_pere, &nom_grandmere2, &prenom_grandmere2, &nom_grandpere2, &prenom_grandpere2, &rien, &rien);
       
       //déclaration des balises
       char balisetitre[TAILLE_MAX];
