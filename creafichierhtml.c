@@ -3,79 +3,103 @@
 #include <string.h>
 #define TAILLE_MAX 1000
 
- 
-int main ()
+//fonction pour créer les balises lien
+char *baliselien(char *nom, char *prenom, char *balise)
 {
- char *chaine = malloc(sizeof(char*)*TAILLE_MAX);
-    FILE *fp = fopen("test.html", "r");
-    int i =0;
-    char * prenom = "Earnest";
-    char * nom = "Davenport";
-    char *date = "14/5/1875";
-    char * lieux = "Norfolk";
-    //parents
-    char * pere = "Barney";
-    char * mere ="Gia";
-    //côté père
-    char * gpp ="Davenport, Christian";
-    char * gmp ="dezfzefe";
-    //côté mère
-    char * gpm ="Newbury,Rey,";
-    char * gmm ="-";
-    //déclaration des balises
-    char balisetitre[TAILLE_MAX];
-    char nomfichier[TAILLE_MAX];
-    char balisedate[TAILLE_MAX];
-    char baliselieux[TAILLE_MAX];
-    char balisepere[TAILLE_MAX];
-    //création de la balise date
-    sprintf(balisedate,"<span>%s</span>",date);//ligne 51
-    //création de la balise lieux de naissance
-    sprintf(baliselieux,"<span>%s</span>",lieux);//ligne 54
-   //création de la balise nom prenom
-   sprintf(balisetitre,"<h2> %s %s </h2>\n",prenom,nom);//ligne 49
-   //création du non du fichier 
-   sprintf(nomfichier,"%s%s.html",nom,prenom);
-   //creation balise père
-   sprintf(balisepere,"<a href=\"%s%s.html\">%s</a>",nom,pere,pere);
 
-    FILE *newfp =fopen (nomfichier,"w");
-  if (fp != NULL)
+   sprintf(balise, "<a href=\"%s%s.html\">%s %s</a>", nom, prenom, prenom, nom);
+   return balise;
+}
 
+
+void creationhtml(Person structure[TAILLE_MAX])
+{
+   for (int j = 0; j < 40; j++)
    {
 
-       while (fgets(chaine, TAILLE_MAX, fp) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+      char chaine[TAILLE_MAX];
+      FILE *fp = fopen("test.html", "r");
+      int i = 0;
+      char prenom[TAILLE_MAX] = structure[j].firstname;
+      char nom[TAILLE_MAX] = structure[j].lastname;
+      char date[TAILLE_MAX] = structure[j].birthdate;
+      char lieux[TAILLE_MAX] = structure[j].city;
 
-       {
-           i++;
-           switch (i)
-           {
-           case 49:
-               fputs(balisetitre,newfp);
+      //parents
+      char prenom_pere[TAILLE_MAX] = "Barney";
+      char nom_pere[TAILLE_MAX] = "Davenport";
+      char prenom_mere[TAILLE_MAX] = "Gia";
+      char nom_mere[TAILLE_MAX] = "idehyyy";
+      //côté père
+      char prenom_grandpere1[TAILLE_MAX];
+      char nom_grandpere1[TAILLE_MAX];
+      char prenom_grandmere1[TAILLE_MAX];
+      char nom_grandmere1[TAILLE_MAX];
+      //côté mère
+      char prenom_grandpere2[TAILLE_MAX];
+      char nom_grandpere2[TAILLE_MAX];
+      char prenom_grandmere2[TAILLE_MAX];
+      char nom_grandmere2[TAILLE_MAX];
+      //déclaration des balises
+      char balisetitre[TAILLE_MAX];
+      char nomfichier[TAILLE_MAX];
+      char balisedate[TAILLE_MAX];
+      char baliselieux[TAILLE_MAX];
+      char balise_lien[TAILLE_MAX];
+      //création de la balise date
+      sprintf(balisedate, "<span>%s</span>", date); //ligne 51
+      //création de la balise lieux de naissance
+      sprintf(baliselieux, "<span>%s</span>", lieux); //ligne 54
+      //création de la balise nom prenom
+      sprintf(balisetitre, "<h2> %s %s </h2>\n", prenom, nom); //ligne 49
+      //création du non du fichier
+      sprintf(nomfichier, "%s%s.html", nom, prenom);
+
+      FILE *newfp = fopen(nomfichier, "w");
+      if (fp != NULL)
+      {
+         while (fgets(chaine, TAILLE_MAX, fp) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+         {
+            i++;
+            switch (i)
+            {
+            case 49:
+               fputs(balisetitre, newfp);
                break;
-           case 51 :
-             fputs(balisedate,newfp);
-             break;
-           case 54:
-             fputs(baliselieux,newfp);
-             break;
+            case 51:
+               fputs(balisedate, newfp);
+               break;
+            case 54:
+               fputs(baliselieux, newfp);
+               break;
             case 62:
-            fputs(balisepere,newfp);
-             break;
-           default:
-               fputs(chaine,newfp);
+               fputs(baliselien(nom_pere, prenom_pere, balise_lien), newfp);
                break;
-           }
-           
-          
+            case 65:
+               fputs(baliselien(nom_mere, prenom_mere, balise_lien), newfp);
+               break;
+            case 70:
+               fputs(baliselien(nom_grandpere1, prenom_grandpere1, balise_lien), newfp);
+               break;
+            case 73:
+               fputs(baliselien(nom_grandmere1, prenom_grandmere1, balise_lien), newfp);
+               break;
+            case 76:
+               fputs(baliselien(nom_grandpere2, prenom_grandpere2, balise_lien), newfp);
+               break;
+            case 79:
+               fputs(baliselien(nom_grandmere2, prenom_grandmere2, balise_lien), newfp);
+               break;
+            default:
+               fputs(chaine, newfp);
+               break;
+            }
+         }
 
-       }
-
-
-    fclose(newfp);
-    fclose(fp);
-
+         fclose(newfp);
+         fclose(fp);
+      }
    }
 
-    return 0;
+ 
 }
