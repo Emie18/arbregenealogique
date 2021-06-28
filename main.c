@@ -25,7 +25,8 @@ int main()
     //varible pour attrendre une action de l'utilisateur
     char *rien = malloc(sizeof(char *) * 20);
     srand(time(NULL));
-
+    
+     
     //Initialisation des données
     initialisation(structure);
     parents(structure);
@@ -45,18 +46,18 @@ int main()
         {
 
         //Partie utilisant un nom et actuellement inutilisable car il y a plusieurs personnes avec le même nom
-        // case 1:
+         case 1:
 
-        //     //Plusieurs personnes ont le même nom donc c'est façon de rechercher n'est pas viable.
+       
+            list(structure);
+       
+            //attente d'une action de l'utilisateur
+            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            if(fgets(rien,LONGUEUR_MAX,stdin));{
+                break;
+            }
 
-        //     printf("Vous voulez rechercher l'arbre généalogique d'une personne en connaissant son nom.\nQuel est le nom de cette personne :\n");
-        //     fgets(nom, LONGUEUR_MAX, stdin);
-        //     //nom_fichier_html(structure, identifiant, prenom, nom);
-
-        //     list_nom_famille(structure,nom);
-        //     printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
-
-        //     break;
+             break;
 
         //Si la personne veut un arbre généalogique d'une personne en connaissant son prénom
         case 2:
@@ -109,6 +110,7 @@ int main()
                     break;
                 }
             }
+            
             nom_fichier_html(structure, identifiant, &nomfichier);
             ouverture_de_fichier_html(nomfichier);
 
@@ -142,7 +144,6 @@ int main()
             }
 
         case 6:
-        
 
             break;
         }
@@ -150,11 +151,14 @@ int main()
         if (action == 6)
         {
 
+        //libere_structure(structure);
+       
             break;
         }
-    }
 
-    //libere_structure(structure);
+    }
+  
+
 
     return 0;
 }

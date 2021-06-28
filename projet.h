@@ -57,7 +57,7 @@ void nom_fichier_html(Person structure[NB_PERSONNES], int id, char **nomfichier)
 
 void recherche_par_prenom(Person structure[NB_PERSONNES], char *prenom, char **nomfichier);
 
-//int list_nom_famille(Person structure[NB_PERSONNES],char * nom);
+int list(Person structure[NB_PERSONNES]);
 
 void ouverture_de_fichier_html(char *nomfichier);
 
@@ -67,7 +67,7 @@ char *baliselien(char *nom, char *prenom, char *balise);
 
 void frere_soeur(Person structure[NB_PERSONNES], int id, char *prenom);
 
-void libere_structure(Person structure[NB_PERSONNES]);
+void libere_structure(Person  structure[NB_PERSONNES]);
 
 int menu2_fratrie();
 

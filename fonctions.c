@@ -82,6 +82,7 @@ void initialisation(Person structure[NB_PERSONNES]){
 
                 //Affectation des données lu au struct du même rang que la ligne lu
                 structure[i] = *initPerson(id, father_id, mother_id, lastname, firstname, birthdate, city);
+              
 
         }
         //Fermeture du fichier
@@ -102,7 +103,6 @@ Person * initPerson(int id, int father_id, int mother_id, char *lastname, char *
         strncpy(actuel->firstname, firstname, strlen(firstname));
         strncpy(actuel->birthdate, birthdate, strlen(birthdate));
         strncpy(actuel->city, city, strlen(city));
-        
         //renvoie de l'adresse de la struture créé
         return actuel;
 }
@@ -427,7 +427,7 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
             idmere = structure[id].mother_id;
             idpere = structure[id].father_id;
         }
-
+        printf("Vous cherchez les frères et soeurs de %s %s\n", structure[id].lastname, structure[id].firstname);
         for(i = 1; i<NB_PERSONNES; i++){
 
             //Si la personne que l'on vérifie à les même parents
@@ -468,16 +468,26 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
 }
 
 
-
-/* void libere_structure(Person structure[NB_PERSONNES]){
-
-        //  for(int i = 0; i < NB_PERSONNES; i++){
-
-                 
-        //          free(structure[i]);
-
+ void libere_structure(Person structure[NB_PERSONNES]){
+         
+         
+        //  for(int i = 0; i<NB_PERSONNES;i++){
+              
+        //         free(&structure[i].id);
+        //         free(&structure[i].father_id);
+        //         free(&structure[i].mother_id);
+        //         free(&structure[i].lastname);
+        //         free(&structure[i].birthdate);
+        //         free(&structure[i].city);
+        //         printf("%p,%s\n",structure->city, structure[i].city);
+        //         free(structure[i].p_father);
+        //         free(structure[i].p_mother);
+        //         free(&structure[i]);
+        //       //free(*structure[i].firstname);
+        //       printf("a");  
         //  }
-}*/
+         
+}
 
 int menu2_fratrie()
 {
@@ -527,7 +537,7 @@ int menu_principal(){
 
         printf(BLEU "Bonjour, que souhaitez vous faire ?\n\n");
 
-        printf("1. Rechercher une personne par son nom.\n\n");
+        printf("1. Afficher La liste entère des personnes enregistrées.\n\n");
 
         printf("2. Rechercher une personne par son prénom.\n\n");
 
@@ -644,3 +654,26 @@ int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
                 break;
             }
 }
+
+int list (Person structure[NB_PERSONNES]){
+        char texte[TAILLE_MAX];
+        printf(SOULIGNE"Liste de toutes les personne enregistré:\n"NORMAL);
+        for (int i = 1; i< NB_PERSONNES ; i++){
+                printf("id: %d\t nom: %s\t prénom :%s\n",structure[i].id,structure[i].lastname, structure[i].firstname);
+
+        }
+        printf("Taper un id pour ouvrir sa page ou \t Taper: 0 ou autre \n :");
+        fgets(texte,TAILLE_MAX,stdin);
+        int id = atoi(texte);
+        
+        char nomfichier[TAILLE_MAX] = "\0";
+        if(id > 0){
+
+                sprintf(nomfichier, "fichiers_HTML/%s%s.html", structure[id].lastname, structure[id].firstname);
+                printf(BLEUCLAIR"Ouverture dufichier en cours ...\n"NORMAL);
+                ouverture_de_fichier_html(nomfichier);
+        }
+
+        
+
+ }
