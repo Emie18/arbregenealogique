@@ -402,7 +402,7 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
     int idmere = 0;
     int idpere = 0;
     int n = 0;
-
+    int erreur =0;
     //C'est un nom qui à été fournis
     if(strcmp(prenom,vide) != 0){
 
@@ -415,8 +415,12 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
                 idmere = structure[i].mother_id;
                 idpere = structure[i].father_id;
                 id = structure[i].id;
+                erreur = 1;
             }
-        }                    
+        } 
+          if (!erreur){
+                  printf(ROUGE"prenom inconnu (vérifiez que le prenom commence par une Majuscule!)\n"NORMAL);
+          }                 
     }
     //Si c'est un id qui à été fournis ou si on l'a récupéré à partir de son prénom
     if(id != 0){
