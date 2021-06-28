@@ -48,9 +48,8 @@ int main()
         //Partie utilisant un nom et actuellement inutilisable car il y a plusieurs personnes avec le même nom
          case 1:
 
-       
             list(structure);
-       
+            recherche_nom(structure);
             //attente d'une action de l'utilisateur
             printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
@@ -58,9 +57,19 @@ int main()
             }
 
              break;
+        //recherche par nom de Famille
+        case 2 :
+
+            recherche_nom(structure);
+            //attente d'une action de l'utilisateur
+            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            if(fgets(rien,LONGUEUR_MAX,stdin));{
+                break;
+            }
+
 
         //Si la personne veut un arbre généalogique d'une personne en connaissant son prénom
-        case 2:
+        case 3:
 
             printf("Vous voulez rechercher l'arbre généalogique d'une personne en connaissant son prénom.\n");
             printf(SOULIGNE"Quel est le prénom de cette personne :\n"NORMAL);
@@ -80,7 +89,7 @@ int main()
             
 
         //Si la personne veut un arbre généalogique d'une personne en connaissant son id
-        case 3:
+        case 4:
 
             printf("\nVous voulez rechercher l'arbre généalogique d'une personne en connaissant son identifiant.\n");
             printf(SOULIGNE"Quel est l'identifiant de cette personne :\n" NORMAL);
@@ -120,7 +129,7 @@ int main()
                 break;
             }
         //Si la personne veut un arbre généalogique d'une personne aléatoire
-        case 4:
+        case 5:
 
             printf("Vous voulez rechercher l'arbre généalogique d'une personne aléatoire.\n");
             identifiant = rand() % NB_PERSONNES;
@@ -132,7 +141,7 @@ int main()
                 break;
             }
         //Si la personne veut connaître les frères et soeurs d'une personne
-        case 5:
+        case 6:
             
             action1 = menu2_fratrie();
             switch_fratrie(action1, structure);
@@ -143,12 +152,12 @@ int main()
                 break;
             }
 
-        case 6:
+        case 7:
 
             break;
         }
 
-        if (action == 6)
+        if (action == 7)
         {
 
         //libere_structure(structure);

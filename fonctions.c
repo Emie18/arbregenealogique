@@ -539,15 +539,17 @@ int menu_principal(){
 
         printf("1. Afficher La liste entère des personnes enregistrées.\n\n");
 
-        printf("2. Rechercher une personne par son prénom.\n\n");
+        printf("2. Rechercher les personne posédant un Le même nom de Famille\n\n");
 
-        printf("3. Rechercher une personne par son identifiant (id).\n\n");
+        printf("3. Rechercher une personne par son prénom.\n\n");
 
-        printf("4. Découvrir un arbre généalogique aléatoire.\n\n");
+        printf("4. Rechercher une personne par son identifiant (id).\n\n");
 
-        printf("5. Rechercher les frères et soeurs d'une personne.\n\n");
+        printf("5. Découvrir un arbre généalogique aléatoire.\n\n");
 
-        printf("\t\t->Si vous voulez stopper le logiciel, tapez 6<-\n" NORMAL);
+        printf("6. Rechercher les frères et soeurs d'une personne.\n\n");
+
+        printf("\t\t->Si vous voulez stopper le logiciel, tapez 7<-\n" NORMAL);
 
         printf("\n\n===========================================================================\n");
 
@@ -592,17 +594,11 @@ int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
         {
 
                 //Partie utilisant un nom et actuellement inutilisable car il y a plusieurs personnes avec le même nom
-                /*case 1:
+                case 1:
 
-                        Même problème que pour la recherche d'arbre généalogique par nom.
-                        
-                        printf("Vous voulez rechercher les frères et soeurs d'une personne en connaissant son nom.
-                        \nQuel est le nom de cette personne :\n");
-                        fgets(nom, LONGUEUR_MAX, stdin);
-                        longueur = strlen(nom);
-                        nom[(longueur - 1)] = '\0';
+                        recherche_frere_soeur_par_nom(structure);
                        
-                break; */
+                break; 
 
             //Si la personne veut les frères et soeurs d'une personne en connaissant son prénom
             case 2:
@@ -655,14 +651,15 @@ int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
             }
 }
 
-int list (Person structure[NB_PERSONNES]){
+int list(Person structure[NB_PERSONNES])
+{
         char texte[TAILLE_MAX];
         printf(SOULIGNE"Liste de toutes les personne enregistré:\n"NORMAL);
         for (int i = 1; i< NB_PERSONNES ; i++){
                 printf("id: %d\t nom: %s\t prénom :%s\n",structure[i].id,structure[i].lastname, structure[i].firstname);
 
         }
-        printf("Taper un id pour ouvrir sa page ou \t Taper: 0 ou autre \n :");
+        printf("Taper un id pour ouvrir sa page  %sou Taper: 0 ou autre pour passer%s \n :",SOULIGNE,NORMAL);
         fgets(texte,TAILLE_MAX,stdin);
         int id = atoi(texte);
         
@@ -670,10 +667,67 @@ int list (Person structure[NB_PERSONNES]){
         if(id > 0){
 
                 sprintf(nomfichier, "fichiers_HTML/%s%s.html", structure[id].lastname, structure[id].firstname);
-                printf(BLEUCLAIR"Ouverture dufichier en cours ...\n"NORMAL);
+                printf(BLEUCLAIR"Ouverture du fichier en cours ...\n"NORMAL);
                 ouverture_de_fichier_html(nomfichier);
         }
+}
+int recherche_nom(Person structure[NB_PERSONNES]){
+        char nom[TAILLE_MAX];
+        printf("Entrez le nom (La première lettre doit-être une majuscule !): ");
+        fgets(nom,TAILLE_MAX,stdin);
+         nom[strlen(nom) - 1] = '\0';
+        int erreur =0;
+        for(int i = 0;i<NB_PERSONNES;i++){
+                if(strcmp(nom,structure[i].lastname)==0){
+                        printf("id :%d\t nom :%s\tprénom: %s\n",i,nom,structure[i].firstname);
+                        erreur =1;
+                }
+        }
+        //si il y a au moins une personne avec ce nom de Famille
+        if (erreur)
+        {
+                printf("Taper un id pour ouvrir sa page  %sou Taper: 0 ou autre pour passer%s \n :", SOULIGNE, NORMAL);
+                fgets(nom, TAILLE_MAX, stdin);
+                int id = atoi(nom);
 
-        
+                char nomfichier[TAILLE_MAX] = "\0";
+                if (id > 0)
+                {
+                        sprintf(nomfichier, "fichiers_HTML/%s%s.html", structure[id].lastname, structure[id].firstname);
+                        printf(BLEUCLAIR "Ouverture du fichier en cours ...\n" NORMAL);
+                        ouverture_de_fichier_html(nomfichier);
+                }
+        }else{
+                printf(ROUGE"Nom inconnu,(vérifier que le nom commence par une Majuscule)\n"NORMAL);
+        }
+}
+int recherche_frere_soeur_par_nom(Person structure[NB_PERSONNES]){
+        char nom[TAILLE_MAX];
+        printf("Entrez le nom (La première lettre doit-être une majuscule !): ");
+        fgets(nom,TAILLE_MAX,stdin);
+         nom[strlen(nom) - 1] = '\0';
+        int erreur =0;
+        for(int i = 0;i<NB_PERSONNES;i++){
+                if(strcmp(nom,structure[i].lastname)==0){
+                        printf("id :%d\t nom :%s\tprénom: %s\n",i,nom,structure[i].firstname);
+                        erreur =1;
+                }
+        }
+        //si il y a au moins une personne avec ce nom de Famille
+        if (erreur)
+        {
+                printf("Taper l'id de la personne souhaitée  %sou Taper: 0 ou autre pour passer%s \n :", SOULIGNE, NORMAL);
+                fgets(nom, TAILLE_MAX, stdin);
+                int id = atoi(nom);
+               
+                char nomfichier[TAILLE_MAX] = "\0";
+                if (id > 0)
+                {
+                         frere_soeur(structure,id,"");
+                       
+                }
+        }else{
+                printf(ROUGE"Nom inconnu,(vérifier que le nom commence par une Majuscule)\n"NORMAL);
+        }
 
- }
+}

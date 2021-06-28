@@ -74,3 +74,7 @@ int menu2_fratrie();
 int menu_principal();
 
 int switch_fratrie(int action1, Person structure[NB_PERSONNES]);
+
+int recherche_nom(Person structure[NB_PERSONNES]);
+
+int recherche_frere_soeur_par_nom(Person structure[NB_PERSONNES]);
