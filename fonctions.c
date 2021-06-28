@@ -1,6 +1,20 @@
+/*----------------------------
+    Projet de fin d'année CIR 1
+    Nom projet : 
+                Arbre genealogique
+    Auteurs:
+            Matthis Miaud 
+                    et 
+            Emilie Le Rouzic
+
+    nom du fichier : fonctions.c
+    date : Juin 2021
+------------------------------*/
+
 #include "projet.h"
 
-//Fonction qui récupère les données du fichier fourni, appelle la fonction pour créer une struture pour stocker ces données puis les stocke dans le tableau de struture donné à l'appel
+//Fonction qui récupère les données du fichier fourni, appelle la fonction pour créer une struture pour stocker 
+//ces données puis les stocke dans le tableau de struture donné à l'appel
 void initialisation(Person structure[NB_PERSONNES]){
 
         char ligne [CARACTERE_LIGNE];
@@ -149,7 +163,8 @@ void parents(Person structure[NB_PERSONNES]){
 }*/
 
 //Fonction qui récupère le nom des parents
-void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere, int *id_mere, int *id_pere){
+void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere,
+ int *id_mere, int *id_pere){
 
         Person *a = NULL;
         a = struture[enfant].p_mother;
@@ -200,7 +215,7 @@ void recherche_par_prenom(Person structure[NB_PERSONNES], char * prenom,char ** 
                         erreur = 1;
                         nom = structure[i].lastname;
                         sprintf(*nomfichier,"fichiers_HTML/%s%s.html",nom,prenom);
-                        printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+                        printf(BLEUCLAIR "Veuillez attrendre quelques seconde l'ouverture du fichier...\n" NORMAL);
                 }
         }
         if (erreur==0){
@@ -234,30 +249,23 @@ void recherche_par_prenom(Person structure[NB_PERSONNES], char * prenom,char ** 
 
 // }
 //Fonction qui à pour but de recréer le nomm du fichier contenant l'arbre généalogique de la personne renseigné
-void nom_fichier_html(Person structure[NB_PERSONNES], int id, char ** nomfichier){
-         char *prenom1;
-        char *nom1;
-        
-        char vide[LONGUEUR_MAX] = "\0";
-        int i;
-        //décalage du tableau
-        id ++;
-      
+void nom_fichier_html(Person structure[NB_PERSONNES], int id, char **nomfichier)
+{
         //Si l'utilisateur à fournis un ID (qui n'est donc pas nul)
-        if(id != 0){
-
-                //Le nom du fichier sera "fichiers_HTML+le nom et le prénom contenus dans la structure au rang de l'id donné - 1 (les tableau commencent au rang 0 alors que le fichier commence au rang 0) 
-                sprintf(*nomfichier,"fichiers_HTML/%s%s.html",structure[id-1].lastname,structure[id-1].firstname);
-                
-        
-                }else{
-                        printf(ROUGE"Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n"NORMAL);   
-                        *nomfichier = "";
-                }
-
-
+        if (id > 0)
+        {
+                //Le nom du fichier sera "fichiers_HTML+le nom et le prénom contenus dans la structure au rang de l'id donné - 1 
+                //(les tableau commencent au rang 0 alors que le fichier commence au rang 0)
+                sprintf(*nomfichier, "fichiers_HTML/%s%s.html", structure[id].lastname, structure[id].firstname);
+                printf(BLEUCLAIR "Veuillez attrendre quelques seconde l'ouverture du fichier...\n" NORMAL);
+        }
+        //Si le l'id n'est pas connu 
+        else
+        {
+                printf(ROUGE "Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n" NORMAL);
+                *nomfichier = "";
+        }
 }
-
 
 //Fonction qui ouvre le fichier fournis à l'appel
 void ouverture_de_fichier_html(char * nomfichier){
@@ -385,107 +393,81 @@ void creationhtml(Person structure[NB_PERSONNES])
 }
 
 //Fonction qui permet de rescencer les frères et soeurs de la personne renseigné à l'appel
+
 void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
 
 
-        char vide[LONGUEUR_MAX] = "\0";
-        int i;
-        int idmere = 0;
-        int idpere = 0;
+    char vide[LONGUEUR_MAX] = "\0";
+    int i;
+    int idmere = 0;
+    int idpere = 0;
+    int n = 0;
 
-        //C'est un nom qui à été fournis
-        if(strcmp(prenom,vide) != 0){
+    //C'est un nom qui à été fournis
+    if(strcmp(prenom,vide) != 0){
 
-                for(i = 0; i<NB_PERSONNES; i++){
+        for(i = 0; i<NB_PERSONNES; i++){
 
-                        //On recherche la personne qui à le même prénom pour pourvoir récupérer son id et ceux de ses parents
-                        if(strcmp(structure[i].firstname, prenom) == 0 ){
+            //On recherche la personne qui à le même prénom pour pourvoir récupérer son id et ceux de ses parents
+            if(strcmp(structure[i].firstname, prenom) == 0 ){
 
 
-                                idmere = structure[i].mother_id;
-                                idpere = structure[i].father_id;
-                                id = structure[i].id;
-                                //break;
+                idmere = structure[i].mother_id;
+                idpere = structure[i].father_id;
+                id = structure[i].id;
+            }
+        }                    
+    }
+    //Si c'est un id qui à été fournis ou si on l'a récupéré à partir de son prénom
+    if(id != 0){
 
-                        }
-
-                }
-                /*for(i = 0; i<NB_PERSONNES; i++){
-
+        //Si on ne connaît pas encore l'id des parents, on les récupèrent
+        if (idmere == 0 && idpere == 0){
                         
-
-
-                        if(idmere == structure[i].mother_id && idpere == structure[i].father_id){
-                                
-                                //printf("2.1.1\n");
-
-                                if(structure[i].id != id){
-
-                                        printf("%s %s est un frère/une soeur de %s %s\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-                                }
-
-                        }else{if(idmere != structure[i].mother_id && idpere == structure[i].father_id){
-                                        printf("2.1.2\n");
-
-                                        printf("%s %s est un beau-frère/une belle-soeur de %s %s du côté paternel\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-
-                        }else{if(idmere == structure[i].mother_id && idpere != structure[i].father_id){
-                                        printf("2.1.3\n");
-
-                                        printf("%s %s est un beau-frère/une belle-soeur de %s %s du côté maternel\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-
-                                }
-                                //Peut-être rajouter une variable pour savoir si des frêres ou soeurs on été trouvé et si aucun n'a été trouvé, afficher un message particulier ?
-                        }
-                        }
-
-                }*/
-               
+            idmere = structure[id].mother_id;
+            idpere = structure[id].father_id;
         }
-        //Si c'est un id qui à été fournis ou si on l'a récupéré à partir de son prénom
-        if(id != 0){
 
-                //Si on ne connaît pas encore l'id des parents, on les récupèrent
-                if (idmere == 0){
-                
-                        idmere = structure[id-1].mother_id;
-                        idpere = structure[id-1].father_id;
+        for(i = 1; i<NB_PERSONNES; i++){
 
+            //Si la personne que l'on vérifie à les même parents
+            if(idmere == structure[i].mother_id && idpere == structure[i].father_id && idmere != 0 && idpere != 0){
+
+                //Si la personne que l'on étudie n'est pas la personne dont on veut savoir les frères et soeurs (pour eviter de dire que la personne a est frère de la personne a)
+                if(structure[i].id != id){
+
+                    printf("%s %s est un frère/une soeur de %s %s\n", structure[i].firstname, structure[i].lastname, structure[id].firstname, structure[id].lastname);
+                    n++;
                 }
 
+            //Si c'est un demi-frère/une belle-soeur paternel        
+            }else{if(idmere != structure[i].mother_id && idpere == structure[i].father_id && idpere != 0){
 
-                for(i = 0; i<NB_PERSONNES; i++){
+                printf("%s %s est un demi-frère/une demie-soeur de %s %s du côté paternel\n", structure[i].firstname, structure[i].lastname, structure[id].firstname, structure[id].lastname);
+                n++;
 
-                        //Si la personne que l'on vérifie à les même parents
-                        if(idmere == structure[i].mother_id && idpere == structure[i].father_id){
+            //Si c'est un demi-frère/une belle-soeur paternel        
+            }else{if(idmere == structure[i].mother_id && idpere != structure[i].father_id && idmere != 0){
 
-                                //Si la personne que l'on étudie n'est pas la personne dont on veut savoir les frères et soeurs (pour eviter de dire que la personne a est frère de la personne a)
-                                if(structure[i].id != id){
-
-                                        printf("%s %s est un frère/une soeur de %s %s\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-                                }
-
-                        //Si c'est un beau-frère/une belle-soeur paternel        
-                        }else{if(idmere != structure[i].mother_id && idpere == structure[i].father_id){
-
-                                        printf("%s %s est un beau-frère/une belle-soeur de %s %s du côté paternel\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-
-                        //Si c'est un beau-frère/une belle-soeur paternel        
-                        }else{if(idmere == structure[i].mother_id && idpere != structure[i].father_id){
-
-                                        printf("%s %s est un beau-frère/une belle-soeur de %s %s du côté maternel\n", structure[i].firstname, structure[i].lastname, structure[id-1].firstname, structure[id-1].lastname);
-
-                                }
-                                //Peut-être rajouter une variable pour savoir si des frêres ou soeurs on été trouvé et si aucun n'a été trouvé, afficher un message particulier ?
-                        }
-                        }
-
+                printf("%s %s est un demi-frère/une demie-soeur de %s %s du côté maternel\n", structure[i].firstname, structure[i].lastname, structure[id].firstname, structure[id].lastname);
+                n++;
                 }
+            }
+            }
         }
+    
+        if(n == 0){
+
+            printf("Cette personne n'a pas de frère ni de soeurs\n");
+
+        }
+    }
 
 
 
 }
+
+
 
 /* void libere_structure(Person structure[NB_PERSONNES]){
 
@@ -497,3 +479,168 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
         //  }
 }*/
 
+int menu2_fratrie()
+{
+        int i = 0;
+        char action[TAILLE_MAX];
+        printf(SOULIGNE "\nVous voulez rechercher les frères et soeurs d'une personne.\n" NORMAL);
+        printf("Comment voulez vous rechercher cette personne ?\n\n");
+        printf(BLEU "1. Rechercher par son nom.\n\n");
+        printf("2. Rechercher par son prénom.\n\n");
+        printf("3. Rechercher par son identifiant (id)\n\n" NORMAL);
+        printf(SOULIGNE "Veuillez renseigner votre choix :\n" NORMAL);
+        fgets(action, LONGUEUR_MAX, stdin);
+        int action1 = atoi(action);
+
+        //Vérification que le choix est un choix possible
+        while (1)
+        {
+
+                if (action1 < 1 || action1 > 3)
+                {
+                        i++;
+                        printf(ROUGE "Vous n'avez pas renseigné une action valide, veuillez réessayer :\n" NORMAL);
+                        fgets(action, LONGUEUR_MAX, stdin);
+                        action1 = atoi(action);
+                        if (i > NB_MAX_ESSAI)
+                        {
+                                printf(ROUGE "nombre d'essai dépasser\n" NORMAL);
+                                return 0;
+                        }
+                }
+                else
+                {
+                        return action1;
+                }
+        }
+}
+
+int menu_principal(){
+        int nombre_essai = 0;
+        char actionc[TAILLE_MAX];
+        int action;
+    while (1)
+    {
+
+        //affichage du menu
+        printf("\n\n===========================================================================\n\n");
+
+        printf(BLEU "Bonjour, que souhaitez vous faire ?\n\n");
+
+        printf("1. Rechercher une personne par son nom.\n\n");
+
+        printf("2. Rechercher une personne par son prénom.\n\n");
+
+        printf("3. Rechercher une personne par son identifiant (id).\n\n");
+
+        printf("4. Découvrir un arbre généalogique aléatoire.\n\n");
+
+        printf("5. Rechercher les frères et soeurs d'une personne.\n\n");
+
+        printf("\t\t->Si vous voulez stopper le logiciel, tapez 6<-\n" NORMAL);
+
+        printf("\n\n===========================================================================\n");
+
+        //Récupération du choix
+        printf(SOULIGNE"Veuillez renseigner votre choix :\n"NORMAL);
+        fgets(actionc, LONGUEUR_MAX, stdin);
+        action = atoi(actionc);
+
+        //Vérification du choix est un choix possible
+        while (1)
+        {
+
+            if (action < 1 || action > 6)
+            {
+
+                printf(ROUGE "Vous n'avez pas renseigné une action valide, veuillez réessayer :\n" NORMAL);
+                fgets(actionc, LONGUEUR_MAX, stdin);
+                action = atoi(actionc);
+                nombre_essai++;
+                if (nombre_essai == NB_MAX_ESSAI)
+                {
+                    printf(ROUGE "nombre d'essai dépassé\n" NORMAL);
+                    return 0;
+                }
+            }
+            else
+            {
+                nombre_essai =0;
+                return action;
+            }
+        }
+        }
+}
+int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
+
+        char texte[LONGUEUR_MAX] = "\0";
+        int identifiant = 0;
+        int longueur;
+        int nombre_essai =0;
+
+        switch (action1)
+        {
+
+                //Partie utilisant un nom et actuellement inutilisable car il y a plusieurs personnes avec le même nom
+                /*case 1:
+
+                        Même problème que pour la recherche d'arbre généalogique par nom.
+                        
+                        printf("Vous voulez rechercher les frères et soeurs d'une personne en connaissant son nom.
+                        \nQuel est le nom de cette personne :\n");
+                        fgets(nom, LONGUEUR_MAX, stdin);
+                        longueur = strlen(nom);
+                        nom[(longueur - 1)] = '\0';
+                       
+                break; */
+
+            //Si la personne veut les frères et soeurs d'une personne en connaissant son prénom
+            case 2:
+
+                printf("Vous voulez rechercher les frères et soeurs d'une personne en connaissant son prénom.\n");
+                printf(SOULIGNE"Quel est le prénom de cette personne :\n"NORMAL);
+                fgets(texte, LONGUEUR_MAX, stdin);
+                longueur = strlen(texte);
+                texte[(longueur - 1)] = '\0';
+                frere_soeur(structure, identifiant, texte);
+                
+                //printf("Merci, je vais vous ouvrir l'arbre généalogique de cette personne tout de suite...\n");
+
+                break;
+
+            //Si la personne veut les frères et soeurs d'une personne en connaissant son prénom
+            case 3:
+
+                printf("Vous voulez rechercher les frères et soeurs d'une personne en connaissant son identifiant.\n");
+                printf(SOULIGNE"Quel est l'identifiant de cette personne :\n"NORMAL);
+                fgets(texte, LONGUEUR_MAX, stdin);
+                identifiant = atoi(texte);
+
+                //Vérification que l'id est un id possible
+                while (1)
+                {
+
+                    if (identifiant < 1 || identifiant > 40)
+                    {
+
+                        printf(ROUGE"Vous n'avez pas renseigné une action valide, veuillez réessayer :\n"NORMAL);
+                        fgets(texte, LONGUEUR_MAX, stdin);
+                        nombre_essai ++;
+                        identifiant = atoi(texte);
+                        if(nombre_essai == NB_MAX_ESSAI){
+                                printf(ROUGE"Nombre d'essai dépassé !\n"NORMAL);
+                                break;
+                        }
+                    }
+                    else
+                    {
+
+                        break;
+                    }
+                }
+
+                frere_soeur(structure, identifiant, texte);
+                
+                break;
+            }
+}
