@@ -49,7 +49,6 @@ int main()
          case 1:
 
             list(structure);
-            recherche_nom(structure);
             //attente d'une action de l'utilisateur
             printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
