@@ -45,10 +45,11 @@ struct Person
 };
 // déclaration de toute les fonctions:
 
+//2
 void initialisation(Person structure[NB_PERSONNES]);
-
+//2
 Person *initPerson(int id, int father_id, int mother_id, char *lastname, char *firstname, char *birthdate, char *city);
-
+//2
 void parents(Person structure[NB_PERSONNES]);
 
 void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere, int *id_mere, int *id_pere);
@@ -61,8 +62,9 @@ int list(Person structure[NB_PERSONNES]);
 
 void ouverture_de_fichier_html(char *nomfichier);
 
+//2
 void creationhtml(Person structure[NB_PERSONNES]);
-
+//2
 char *baliselien(char *nom, char *prenom, char *balise);
 
 void frere_soeur(Person structure[NB_PERSONNES], int id, char *prenom);
