@@ -127,7 +127,6 @@ void parents(Person structure[NB_PERSONNES]){
                 }else{
 
                         structure[i].p_father = &structure[b];
-
                 }
                        
                 //Récupération du rang de la mère
@@ -142,29 +141,12 @@ void parents(Person structure[NB_PERSONNES]){
                 }else{
 
                         structure[i].p_mother = &structure[b];
-
                 }
-
         }
 }
 
-/*void noms_parents(Person struture[NB_PERSONNES], int enfant, char **nmere, char **pmere, char **npere, char **ppere){
-
-        Person *a = NULL;
-
-        a = struture[enfant].p_mother;
-        *pmere = a->firstname;
-        *nmere = a->lastname;
-
-        a = struture[enfant].p_father;
-        *ppere = a->firstname;
-        *npere = a->lastname;
-
-}*/
-
 //Fonction qui récupère le nom des parents
-void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere,
- int *id_mere, int *id_pere){
+void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char **pmere, char **npere, char **ppere, int *id_mere, int *id_pere){
 
         Person *a = NULL;
         a = struture[enfant].p_mother;
@@ -182,9 +164,7 @@ void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char 
                 *pmere = a->firstname;
                 *nmere = a->lastname;
                 *id_mere = a->id;
-
         }
- 
         a = struture[enfant].p_father;
         
         //S'il n'y a pas de père, le nom sera "inconnue" et les autres informations seront nulles
@@ -200,68 +180,42 @@ void noms_parents(Person struture[LONGUEUR_MAX], int enfant, char **nmere, char 
                 *ppere = a->firstname;
                 *npere = a->lastname;
                 *id_pere = a->id ;
-        }
-
-
-  
+        }  
 }
+
 void recherche_par_prenom(Person structure[NB_PERSONNES], char * prenom,char ** nomfichier){
        
        int erreur = 0;
        char * nom;
         for(int i = 0;i<NB_PERSONNES;i++){
+
                 if(strcmp(prenom,structure[i].firstname) == 0){
                         
                         erreur = 1;
                         nom = structure[i].lastname;
                         sprintf(*nomfichier,"fichiers_HTML/%s%s.html",nom,prenom);
-                        printf(BLEUCLAIR "Veuillez attrendre quelques seconde l'ouverture du fichier...\n" NORMAL);
+                        printf(BLEUCLAIR "Veuillez attrendre quelques secondes l'ouverture du fichier...\n" NORMAL);
                 }
         }
         if (erreur==0){
-                printf(ROUGE"Prenom inconnu !( vérifier les Majuscules )\n"NORMAL);
+                printf(ROUGE"Prénom inconnu !( vérifier les Majuscules )\n"NORMAL);
                 *nomfichier = "";
         }
 }
 
-// int list_nom_famille(Person structure[NB_PERSONNES],char * nom){
-//         //char f[TAILLE_MAX];
-//         for(int i = 0; i<NB_PERSONNES;i ++){
-//                 char *f ;
-//                 char *g = structure[i].lastname;
-//                 sprintf(f,"%s%s",nom,nom);
-//                 sprintf(g"%s%s"g)
-//                  if(strcmp(g,nom) == 0){
-//                         //printf(BLEUCLAIR"%d:%s,%s\n",structure[i].id,structure[i].firstname,structure[i].lastname, NORMAL);
-                        
-//                 }else{
-//                         printf("%s\n,%s",f,g);
-//                 }
-//         }
-//         // printf("Entrer l'id voulu de la personne :");
-//         // char * idtexte;
-//         // fgets(idtexte, LONGUEUR_MAX, stdin);
-//         // int id = atoi(idtexte);
-//         // char * nomfichier;
-//         // sprintf(*nomfichier,"fichiers_HTML/%s%s.html",structure[id-1].lastname,structure[id-1].firstname);
-//         // ouverture_de_fichier_html(nomfichier);
-//         // return 0;
-
-// }
 //Fonction qui à pour but de recréer le nomm du fichier contenant l'arbre généalogique de la personne renseigné
-void nom_fichier_html(Person structure[NB_PERSONNES], int id, char **nomfichier)
-{
+void nom_fichier_html(Person structure[NB_PERSONNES], int id, char **nomfichier){
+        
         //Si l'utilisateur à fournis un ID (qui n'est donc pas nul)
-        if (id > 0)
-        {
+        if (id > 0){
+
                 //Le nom du fichier sera "fichiers_HTML+le nom et le prénom contenus dans la structure au rang de l'id donné - 1 
                 //(les tableau commencent au rang 0 alors que le fichier commence au rang 0)
                 sprintf(*nomfichier, "fichiers_HTML/%s%s.html", structure[id].lastname, structure[id].firstname);
-                printf(BLEUCLAIR "Veuillez attrendre quelques seconde l'ouverture du fichier...\n" NORMAL);
-        }
-        //Si le l'id n'est pas connu 
-        else
-        {
+                printf(BLEUCLAIR "Veuillez attrendre quelques secondes l'ouverture du fichier...\n" NORMAL);
+        //Si le l'id n'est pas connu
+        }else{
+
                 printf(ROUGE "Désolé, nous n'avons pas pu trouver la personne que vous demandiez...\n" NORMAL);
                 *nomfichier = "";
         }
@@ -269,15 +223,17 @@ void nom_fichier_html(Person structure[NB_PERSONNES], int id, char **nomfichier)
 
 //Fonction qui ouvre le fichier fournis à l'appel
 void ouverture_de_fichier_html(char * nomfichier){
+    
     if(strcmp(nomfichier,"")!= 0){
+
         char* fichier_ouvrir = malloc(sizeof(char*)*TAILLE_MAX);
         sprintf(fichier_ouvrir,"xdg-open %s",nomfichier);
         system(fichier_ouvrir);  
-    }else{
-            printf(ROUGE"Nous n'avons pas put ouvrir de fichier"NORMAL);
-    }
-     
 
+    }else{
+
+        printf(ROUGE"Nous n'avons pas pu ouvrir de fichier"NORMAL);
+    }
 }
 
 //fonction pour créer les balises lien
@@ -287,13 +243,11 @@ char *baliselien(char *nom, char *prenom, char *balise)
    return balise;
 }
 //fonction pour la création des fichiers HTML dans le dessier fichiers_HTML
-void creationhtml(Person structure[NB_PERSONNES])
-{
-   for (int j = 0; j < NB_PERSONNES; j++)
-   {
+void creationhtml(Person structure[NB_PERSONNES]){
+
+   for (int j = 0; j < NB_PERSONNES; j++){
 
       char chaine[TAILLE_MAX];
-
       int i = 0;
       char *prenom = structure[j].firstname;
       char *nom = structure[j].lastname;
@@ -307,8 +261,10 @@ void creationhtml(Person structure[NB_PERSONNES])
       char *nom_mere;
       int id_mere;
       int id_pere;
+
       //variable pour les s'arrêter au grand parent
       int rien;
+
       //recherche des parents de l'enfant
       noms_parents(structure, j, &nom_mere, &prenom_mere, &nom_pere, &prenom_pere, &id_pere, &id_mere);
       
@@ -321,12 +277,12 @@ void creationhtml(Person structure[NB_PERSONNES])
       //recherche des parents du père
       noms_parents(structure, id_mere, &nom_grandmere1, &prenom_grandmere1, &nom_grandpere1, &prenom_grandpere1, &rien, &rien);
       
-      
       //côté mères
       char *prenom_grandpere2;
       char *nom_grandpere2;
       char *prenom_grandmere2;
       char *nom_grandmere2;
+
       //recherche des parents de la mère
       noms_parents(structure, id_pere, &nom_grandmere2, &prenom_grandmere2, &nom_grandpere2, &prenom_grandpere2, &rien, &rien);
       
@@ -336,58 +292,81 @@ void creationhtml(Person structure[NB_PERSONNES])
       char balisedate[TAILLE_MAX];
       char baliselieux[TAILLE_MAX];
       char balise_lien[TAILLE_MAX];
+
       //création de la balise date
       sprintf(balisedate, "<span>%s</span>", date); //ligne 51
+
       //création de la balise lieux de naissance
       sprintf(baliselieux, "<span>%s</span>", lieux); //ligne 54
+
       //création de la balise nom prenom
       sprintf(balisetitre, "<h2> %s %s </h2>\n", prenom, nom); //ligne 49
+
       //création du nom du fichier
       sprintf(nomfichier, "fichiers_HTML/%s%s.html", nom, prenom);
 
       FILE *fp = fopen("test.html", "r");
       FILE *newfp = fopen(nomfichier, "w");
-      if (fp != NULL)
-      {
-         while (fgets(chaine, TAILLE_MAX, fp) != NULL) // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
-         {
-            i++;
-            switch (i)
-            {
-            case 49:
-               fputs(balisetitre, newfp);
-               break;
-            case 51:
-               fputs(balisedate, newfp);
-               break;
-            case 54:
-               fputs(baliselieux, newfp);
-               break;
-            case 62:
-               fputs(baliselien(nom_pere, prenom_pere, balise_lien), newfp);
-               break;
-            case 65:
-               fputs(baliselien(nom_mere, prenom_mere, balise_lien), newfp);
-               break;
-            case 70:
-               fputs(baliselien(nom_grandpere1, prenom_grandpere1, balise_lien), newfp);
-               break;
-            case 73:
-               fputs(baliselien(nom_grandmere1, prenom_grandmere1, balise_lien), newfp);
-               break;
-            case 76:
-               fputs(baliselien(nom_grandpere2, prenom_grandpere2, balise_lien), newfp);
-               break;
-            case 79:
-               fputs(baliselien(nom_grandmere2, prenom_grandmere2, balise_lien), newfp);
-               break;
-            default:
-               fputs(chaine, newfp);
-               break;
-            }
-         }
-         fclose(newfp);
-         fclose(fp);
+      if (fp != NULL){
+
+        while (fgets(chaine, TAILLE_MAX, fp) != NULL){ // On lit le fichier tant qu'on ne reçoit pas d'erreur (NULL)
+         
+                i++;
+                switch (i){
+
+                        case 49:
+
+                                fputs(balisetitre, newfp);
+                                break;
+
+                        case 51:
+
+                                fputs(balisedate, newfp);
+                                break;
+
+                        case 54:
+
+                                fputs(baliselieux, newfp);
+                                break;
+
+                        case 62:
+
+                                fputs(baliselien(nom_pere, prenom_pere, balise_lien), newfp);
+                                break;
+
+                        case 65:
+
+                                fputs(baliselien(nom_mere, prenom_mere, balise_lien), newfp);
+                                break;
+
+                        case 70:
+
+                                fputs(baliselien(nom_grandpere1, prenom_grandpere1, balise_lien), newfp);
+                                break;
+
+                        case 73:
+                        
+                                fputs(baliselien(nom_grandmere1, prenom_grandmere1, balise_lien), newfp);
+                                break;
+
+                        case 76:
+
+                                fputs(baliselien(nom_grandpere2, prenom_grandpere2, balise_lien), newfp);
+                                break;
+
+                        case 79:
+
+                                fputs(baliselien(nom_grandmere2, prenom_grandmere2, balise_lien), newfp);
+                                break;
+
+                        default:
+
+                                fputs(chaine, newfp);
+                                break;
+                }
+        }
+        fclose(newfp);
+        fclose(fp);
       }
    }
 }
@@ -419,7 +398,7 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
             }
         } 
           if (!erreur){
-                  printf(ROUGE"prenom inconnu (vérifiez que le prenom commence par une Majuscule!)\n"NORMAL);
+                  printf(ROUGE"Prénom inconnu (vérifiez que le prénom commence par une Majuscule!)\n"NORMAL);
           }                 
     }
     //Si c'est un id qui à été fournis ou si on l'a récupéré à partir de son prénom
@@ -462,7 +441,7 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
     
         if(n == 0){
 
-            printf("Cette personne n'a pas de frère ni de soeurs\n");
+            printf("Cette personne n'a pas de frères ni de soeurs\n");
 
         }
     }
@@ -471,8 +450,7 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
 
 }
 
-
- void libere_structure(Person structure[NB_PERSONNES]){
+void libere_structure(Person structure[NB_PERSONNES]){
          
          
         //  for(int i = 0; i<NB_PERSONNES;i++){
@@ -493,8 +471,8 @@ void frere_soeur(Person structure[NB_PERSONNES], int id, char * prenom){
          
 }
 
-int menu2_fratrie()
-{
+int menu2_fratrie(){
+
         int i = 0;
         char action[TAILLE_MAX];
         printf(SOULIGNE "\nVous voulez rechercher les frères et soeurs d'une personne.\n" NORMAL);
@@ -518,7 +496,7 @@ int menu2_fratrie()
                         action1 = atoi(action);
                         if (i > NB_MAX_ESSAI)
                         {
-                                printf(ROUGE "nombre d'essai dépasser\n" NORMAL);
+                                printf(ROUGE "Nombre d'essai dépasser\n" NORMAL);
                                 return 0;
                         }
                 }
@@ -541,9 +519,9 @@ int menu_principal(){
 
         printf(BLEU "Bonjour, que souhaitez vous faire ?\n\n");
 
-        printf("1. Afficher La liste entère des personnes enregistrées.\n\n");
+        printf("1. Afficher la liste entère des personnes enregistrées.\n\n");
 
-        printf("2. Rechercher les personne posédant un Le même nom de Famille\n\n");
+        printf("2. Rechercher les personne posédant un le même Nom de famille\n\n");
 
         printf("3. Rechercher une personne par son prénom.\n\n");
 
@@ -575,7 +553,7 @@ int menu_principal(){
                 nombre_essai++;
                 if (nombre_essai == NB_MAX_ESSAI)
                 {
-                    printf(ROUGE "nombre d'essai dépassé\n" NORMAL);
+                    printf(ROUGE "Nombre d'essai dépassé\n" NORMAL);
                     return 0;
                 }
             }
@@ -638,7 +616,7 @@ int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
                         nombre_essai ++;
                         identifiant = atoi(texte);
                         if(nombre_essai == NB_MAX_ESSAI){
-                                printf(ROUGE"Nombre d'essai dépassé !\n"NORMAL);
+                                printf(ROUGE"Nombre d'essais dépassé !\n"NORMAL);
                                 break;
                         }
                     }
@@ -658,15 +636,14 @@ int switch_fratrie(int action1, Person structure[NB_PERSONNES]){
 int list(Person structure[NB_PERSONNES])
 {
         char texte[TAILLE_MAX];
-        printf(SOULIGNE"Liste de toutes les personne enregistré:\n"NORMAL);
+        printf(SOULIGNE"Liste de toutes les personnes enregistrées :\n"NORMAL);
         for (int i = 1; i< NB_PERSONNES ; i++){
-                printf("id: %d\t nom: %s\t prénom :%s\n",structure[i].id,structure[i].lastname, structure[i].firstname);
 
+                printf("ID: %d\t Nom: %s\t Prénom : %s\n",structure[i].id,structure[i].lastname, structure[i].firstname);
         }
-        printf("Taper un id pour ouvrir sa page  %sou Taper: 0 ou autre pour passer%s \n :",SOULIGNE,NORMAL);
+        printf("Taper un id pour ouvrir sa page %s ou tapez sur une touche pour passer %s\n :",SOULIGNE,NORMAL);
         fgets(texte,TAILLE_MAX,stdin);
         int id = atoi(texte);
-        
         char nomfichier[TAILLE_MAX] = "\0";
         if(id > 0){
 
@@ -683,14 +660,14 @@ int recherche_nom(Person structure[NB_PERSONNES]){
         int erreur =0;
         for(int i = 0;i<NB_PERSONNES;i++){
                 if(strcmp(nom,structure[i].lastname)==0){
-                        printf("id :%d\t nom :%s\tprénom: %s\n",i,nom,structure[i].firstname);
+                        printf("ID :%d\t Nom :%s\t Prénom: %s\n",i,nom,structure[i].firstname);
                         erreur =1;
                 }
         }
         //si il y a au moins une personne avec ce nom de Famille
         if (erreur)
         {
-                printf("Taper un id pour ouvrir sa page  %sou Taper: 0 ou autre pour passer%s \n :", SOULIGNE, NORMAL);
+                printf("Taper un id pour ouvrir sa page %s ou tapez sur une touche pour passer %s\n :", SOULIGNE, NORMAL);
                 fgets(nom, TAILLE_MAX, stdin);
                 int id = atoi(nom);
 
@@ -702,25 +679,25 @@ int recherche_nom(Person structure[NB_PERSONNES]){
                         ouverture_de_fichier_html(nomfichier);
                 }
         }else{
-                printf(ROUGE"Nom inconnu,(vérifier que le nom commence par une Majuscule)\n"NORMAL);
+                printf(ROUGE"Nom inconnu. (vérifiez que le nom commence par une Majuscule)\n"NORMAL);
         }
 }
 int recherche_frere_soeur_par_nom(Person structure[NB_PERSONNES]){
         char nom[TAILLE_MAX];
-        printf("Entrez le nom (La première lettre doit-être une majuscule !): ");
+        printf("Entrez le nom (La première lettre doit-être une Majuscule !): ");
         fgets(nom,TAILLE_MAX,stdin);
          nom[strlen(nom) - 1] = '\0';
         int erreur =0;
         for(int i = 0;i<NB_PERSONNES;i++){
                 if(strcmp(nom,structure[i].lastname)==0){
-                        printf("id :%d\t nom :%s\tprénom: %s\n",i,nom,structure[i].firstname);
+                        printf("ID : %d\t nom : %s\tprénom: %s\n",i,nom,structure[i].firstname);
                         erreur =1;
                 }
         }
         //si il y a au moins une personne avec ce nom de Famille
         if (erreur)
         {
-                printf("Taper l'id de la personne souhaitée  %sou Taper: 0 ou autre pour passer%s \n :", SOULIGNE, NORMAL);
+                printf("Taper l'id de la personne souhaitée %s ou tapez sur une touche pour passer %d\n :", SOULIGNE, NORMAL);
                 fgets(nom, TAILLE_MAX, stdin);
                 int id = atoi(nom);
                

@@ -7,7 +7,7 @@
                     et 
             Emilie Le Rouzic
 
-    nom du fichier : Main.c
+    nom du fichier : main.c
     date : Juin 2021
 ------------------------------*/
 #include "projet.h"
@@ -50,7 +50,7 @@ int main()
 
             list(structure);
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
@@ -61,7 +61,7 @@ int main()
 
             recherche_nom(structure);
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
@@ -81,7 +81,7 @@ int main()
             ouverture_de_fichier_html(nomfichier);
 
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
@@ -103,13 +103,13 @@ int main()
                 {
 
                     printf(ROUGE "Vous n'avez pas renseigné une action valide, veuillez réessayer :\n");
-                    printf("vérifier qui l'id est combre entre%s%s 1 et %d %s:\n",SOULIGNE,BLEUCLAIR, NB_PERSONNES-1, NORMAL);
+                    printf("Vérifier qui l'id est compris entre %s%s 1 et %d %s:\n",SOULIGNE,BLEUCLAIR, NB_PERSONNES-1, NORMAL);
                     fgets(texte, LONGUEUR_MAX, stdin);
                     identifiant = atoi(texte);
                     nombre_essai++;
                     if (nombre_essai == NB_MAX_ESSAI)
                     {
-                        printf(ROUGE SOULIGNE"Nombre d'essai dépassés\n" NORMAL);
+                        printf(ROUGE SOULIGNE"Nombre d'essais dépassés\n" NORMAL);
                         break;
                     }
                 }
@@ -123,7 +123,7 @@ int main()
             ouverture_de_fichier_html(nomfichier);
 
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
@@ -135,7 +135,7 @@ int main()
             nom_fichier_html(structure, identifiant, &nomfichier);
             ouverture_de_fichier_html(nomfichier);
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
@@ -146,7 +146,7 @@ int main()
             switch_fratrie(action1, structure);
 
             //attente d'une action de l'utilisateur
-            printf(BLEUCLAIR"\nTaper sur Entrer pour retourner au menu :\n"NORMAL);
+            printf(BLEUCLAIR"\nTapez sur Entrer pour retourner au menu :\n"NORMAL);
             if(fgets(rien,LONGUEUR_MAX,stdin));{
                 break;
             }
